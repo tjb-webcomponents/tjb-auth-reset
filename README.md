@@ -56,20 +56,27 @@ import 'tjb-auth-reset';
 Example:
 
 ```html
-<tjb-reset
-  postbody="{ 'foo': 'bar' }"
-  posturl="https://jsonplaceholder.typicode.com/users"
+<tjb-auth-reset
+  postbody="{ 'lol': 'rofl' }"
+  posturl="/your/api/url"
+  mailurl="https://jsonplaceholder.typicode.com/users"
 >
-  <input value="reset" type="submit" slot="submit" />
-</tjb-reset>
+  <input
+    class="btn btn--cta btn--fs"
+    value="SEND"
+    type="submit"
+    slot="submit"
+  />
+</tjb-auth-reset>
 ```
 
 All attributes:
 
-| attribute | example                                              | description                                                                             |
-| --------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| postbody  | postbody="{ 'foo': 'bar' }"                          | JSON Object that will be added to the remote reset POSt call.                           |
-| posturl   | posturl="https://jsonplaceholder.typicode.com/users" | `URL` that will be called with a `POST` call and credentials as `application/json` body |
+| attribute | example                                              | body                                          | description                                                                                                                                                        |
+| --------- | ---------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| postbody  | postbody="{ 'foo': 'bar' }"                          | -                                             | JSON Object that will be added to the remote reset POSt call.                                                                                                      |
+| mailurl   | mailurl="https://jsonplaceholder.typicode.com/users" | { "email": "…" }                              | `URL` that will be called with a `POST` call and an email as `application/json` body. Used to check if email exists/is valid and to send the password reset key to |
+| posturl   | posturl="https://jsonplaceholder.typicode.com/users" | { "email": "…", "password": "…", "key": "…" } | `URL` that will be called with a `POST` call and new credentials as `application/json` body                                                                        |
 
 ### Events
 
@@ -88,8 +95,11 @@ Default public values:
 ```css
 :host {
   --background-message-error: #fa354c;
+  --background-message-success: limegreen;
+
+  --color-message-success: white;
   --color-message-error: white;
-  --color-reset-info: grey;
+  --color-info: grey;
 
   /* input */
   --reset-input-color-error: #fa354c;

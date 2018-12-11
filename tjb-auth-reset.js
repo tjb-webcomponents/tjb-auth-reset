@@ -16,11 +16,10 @@ class tjbAuthReset extends WebComponent() {
         :host {
           --background-message-error: #fa354c;
           --background-message-success: limegreen;
-          --background-reset-button: blue;
 
           --color-message-success: white;
           --color-message-error: white;
-          --color-reset-info: grey;
+          --color-info: grey;
 
           /* input */
           --reset-input-color-error: #fa354c;
@@ -118,7 +117,7 @@ class tjbAuthReset extends WebComponent() {
         .info {
           text-align: center;
           margin-bottom: 10px;
-          color: var(--color-reset-info);
+          color: var(--color-info);
         }
 
         .footnote {

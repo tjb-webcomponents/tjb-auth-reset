@@ -1,0 +1,39 @@
+{
+  "name": "tjb-auth-reset",
+  "version": "0.1.0",
+  "description": "awesome auth-reset webcomponent",
+  "main": "docs/tjb-auth-reset.min.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "babel --watch tjb-auth-reset.js --out-dir docs | http-server",
+    "build": "npm run build-max | npm run build-min",
+    "build-max": "babel tjb-auth-reset.js --out-file docs/tjb-auth-reset.js",
+    "build-min": "babel --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjb-webcomponents/tjb-auth-reset.git"
+  },
+  "keywords": [
+    "webcomponent",
+    "custom",
+    "element",
+    "htmlelement",
+    "html",
+    "reset",
+    "auth",
+    "label"
+  ],
+  "author": "Thibault Jan Beyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tjb-webcomponents/tjb-auth-reset/issues"
+  },
+  "homepage": "https://github.com/tjb-webcomponents/tjb-auth-reset#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "http-server": "^0.11.1"
+  }
+}

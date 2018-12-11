@@ -72,11 +72,11 @@ Example:
 
 All attributes:
 
-| attribute | example                                              | body                                          | description                                                                                                                                                        |
-| --------- | ---------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| postbody  | postbody="{ 'foo': 'bar' }"                          | -                                             | JSON Object that will be added to the remote reset POSt call.                                                                                                      |
-| mailurl   | mailurl="https://jsonplaceholder.typicode.com/users" | { "email": "…" }                              | `URL` that will be called with a `POST` call and an email as `application/json` body. Used to check if email exists/is valid and to send the password reset key to |
-| posturl   | posturl="https://jsonplaceholder.typicode.com/users" | { "email": "…", "password": "…", "key": "…" } | `URL` that will be called with a `POST` call and new credentials as `application/json` body                                                                        |
+| attribute | example                                              | body                     | description                                                                                                                                                        |
+| --------- | ---------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| postbody  | postbody="{ 'foo': 'bar' }"                          | -                        | JSON Object that will be added to the remote reset POSt call.                                                                                                      |
+| mailurl   | mailurl="https://jsonplaceholder.typicode.com/users" | { email }                | `URL` that will be called with a `POST` call and an email as `application/json` body. Used to check if email exists/is valid and to send the password reset key to |
+| posturl   | posturl="https://jsonplaceholder.typicode.com/users" | { email, password, key } | `URL` that will be called with a `POST` call and new credentials as `application/json` body                                                                        |
 
 ### Events
 

@@ -7,10 +7,12 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "babel --watch tjb-auth-reset.js --out-dir docs | http-server",
+    "start": "npm run watch-max | npm run watch-min | http-server",
     "build": "npm run build-max | npm run build-min",
     "build-max": "babel tjb-auth-reset.js --out-file docs/tjb-auth-reset.js",
-    "build-min": "babel --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js"
+    "build-min": "babel --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js",
+    "watch-max": "babel --watch tjb-auth-reset.js --out-file docs/tjb-auth-reset.js",
+    "watch-min": "babel --watch --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,7 @@ import html from "https://tjb-webcomponents.github.io/html-template-string/html-
 import { bounce } from "https://tjb-webcomponents.github.io/tjb-gfx/tjb-gfx.min.js";
 import "https://tjb-webcomponents.github.io/tjb-input/tjb-input.min.js";
 import "https://tjb-webcomponents.github.io/tjb-statusbar/tjb-statusbar.min.js";
+import "https://tjb-webcomponents.github.io/tjb-notify/tjb-notify.min.js";
 
 class tjbAuthReset extends WebComponent() {
   // Styles
@@ -12,12 +13,15 @@ class tjbAuthReset extends WebComponent() {
     return html`
       <style>
         :host {
-          --background-message-error: #fa354c;
-          --background-message-success: limegreen;
-
-          --color-message-success: white;
-          --color-message-error: white;
           --color-info: grey;
+
+          /* notify */
+          --reset-notify-background-error: #fa354c;
+          --reset-notify-background-success: limegreen;
+          --reset-notify-color-error: white;
+          --reset-notify-color-success: white;
+          --reset-notify-margin: -55px -40px 20px;
+          --reset-notify-padding: 15px 15px 15px 35px;
 
           /* input */
           --reset-input-color-error: #fa354c;
@@ -56,6 +60,15 @@ class tjbAuthReset extends WebComponent() {
           --input-info-color: var(--reset-input-info-color);
           --input-info-font-size: var(--reset-input-info-font-size);
           --input-label-margin: var(--reset-input-label-margin);
+        }
+
+        tjb-notify {
+          --notify-background-error: var(--reset-notify-background-error);
+          --notify-background-success: var(--reset-notify-background-success);
+          --notify-color-error: var(--reset-notify-color-error);
+          --notify-color-success: var(--reset-notify-color-success);
+          --notify-margin: var(--reset-notify-margin);
+          --notify-padding: var(--reset-notify-padding);
         }
 
         .alert {
@@ -183,12 +196,8 @@ class tjbAuthReset extends WebComponent() {
       ></tjb-input>
     ` : '';
 
-    this.messageNode = this.email && this.showkey ? html`
-      <div class="message message message--success">
-        Email send to ${this.email}
-      </div>
-    ` : html`
-      <div class="message message"></div>
+    this.messageNode = html`
+      <tjb-notify></tjb-notify>
     `;
 
     return html`
@@ -255,6 +264,16 @@ class tjbAuthReset extends WebComponent() {
     super.connectedCallback();
     // rerenders
     this.handleShowkeyChange = this.reRender;
+  }
+
+  reRender() {
+    super.reRender();
+
+    if (this.email && this.showkey) {
+      this.messageNode.success = `
+        Email send to ${this.email}
+      `;
+    }
   }
 
   // Logic
@@ -331,14 +350,14 @@ class tjbAuthReset extends WebComponent() {
     this.writeMessageError = this.writeMessageError.bind(this);
     this.statusbar.status = "alert";
     this.domNode.addEventListener("animationend", this.writeMessageError);
-    this.domNode.classList.add("alert");
+    this.domNode.classList.remove("alert");
+    setTimeout(() => this.domNode.classList.add("alert"), 100);
   }
 
   writeMessageError() {
     this.domNode.removeEventListener("animationend", this.writeMessageError);
 
-    this.messageNode.innerHTML = "";
-    const errorMsg = !this.showkey ? html`
+    this.messageNode.error = !this.showkey ? html`
       <ul>
         <li>
           <a
@@ -376,9 +395,6 @@ class tjbAuthReset extends WebComponent() {
         </li>
       </ul>
     `;
-    this.messageNode.appendChild(errorMsg);
-    this.messageNode.classList.remove("message--success");
-    this.messageNode.classList.add("message--error");
 
     if (this.emailInput) this.emailInput.showMessage("error");
     if (this.keyInput) this.keyInput.showMessage("error");

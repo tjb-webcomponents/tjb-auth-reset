@@ -15,7 +15,7 @@ class tjbAuthReset extends WebComponent() {
     return html `
       <style>
         :host {
-          --color-info: grey;
+          --reset-color-info: grey;
 
           /* notify */
           --reset-notify-background-error: #fa354c;
@@ -88,7 +88,7 @@ class tjbAuthReset extends WebComponent() {
         .info {
           text-align: center;
           margin-bottom: 10px;
-          color: var(--color-info);
+          color: var(--reset-color-info);
         }
 
         .footnote {
@@ -122,117 +122,124 @@ class tjbAuthReset extends WebComponent() {
       <tjb-statusbar></tjb-statusbar>
     `;
 
-    this.emailInput = !this.showkey ? html `
-      <tjb-input
-        label="Email"
-        type="email"
-        name="email"
-        required="true"
-        errormessage="Please check your email address"
-      ></tjb-input>
-    ` : '';
+    this.emailInput = !this.showkey ?
+      html `
+          <tjb-input
+            label="Email"
+            type="email"
+            name="email"
+            required="true"
+            errormessage="Please check your email address"
+          ></tjb-input>
+        ` :
+      "";
 
-    this.keyInput = this.showkey ? html `
-      <tjb-input
-        label="Key"
-        type="text"
-        name="key"
-        info="Enter the key you got via email here:"
-        pattern=".{4,}"
-        required="true"
-        errormessage="Please check the key"
-      ></tjb-input>
-    ` : '';
+    this.keyInput = this.showkey ?
+      html `
+          <tjb-input
+            label="Key"
+            type="text"
+            name="key"
+            info="Enter the key you got via email here:"
+            pattern=".{4,}"
+            required="true"
+            errormessage="Please check the key"
+          ></tjb-input>
+        ` :
+      "";
 
-    this.passwordInput = this.showkey ? html `
-      <tjb-input
-        label="New Password"
-        type="password"
-        name="password"
-        info="Enter the new password you want to have here (minimum 8 digits):"
-        pattern=".{8,}"
-        required="true"
-        errormessage="Please check your password"
-      ></tjb-input>
-    ` : '';
-
+    this.passwordInput = this.showkey ?
+      html `
+          <tjb-input
+            label="New Password"
+            type="password"
+            name="password"
+            info="Enter the new password you want to have here (minimum 8 digits):"
+            pattern=".{8,}"
+            required="true"
+            errormessage="Please check your password"
+          ></tjb-input>
+        ` :
+      "";
 
     this.messageNode = html `
       <tjb-notify></tjb-notify>
     `;
 
     return html `
-    <form class="reset__form"
-      onsubmit="${e => this.fetchHandler(e)}">
-      ${this.messageNode}
-      <div class="fieldset">
-        ${!this.showkey ? 
-          html`
-            <div class="info">
-              Forgot your password?<br>
-              Enter your email here
-            </div>`
-        : html`
-          <div class="info">
-            Enter the email key and your new password:
-          </div>
-          `
-        }
-      </div>
-      <div class="fieldset">
-        ${!this.showkey ?
-          this.emailInput : 
-          html`<data-fragment>
-            ${this.keyInput} ${this.passwordInput}
-          </data-fragment>`}
-        <slot name="submit" onclick="${e => this.fetchHandler(e)}"></slot>
-        <div class="footnote">
-        ${!this.showkey ? html`
-        <div>
-          <a
-            href="#login"
-            class="link"
-            onclick="${e => this.openHandler(e, "login")}"
-            >Login</a
-          > | 
-          <a
-            href="#register"
-            class="link"
-            onclick="${e => this.openHandler(e, "register")}"
-            >Register</a
-          >
-        </div>`
-        : html`
-        <div>
-          <span>${this.email || ''}</span
-          > | 
-          <a
-            href="#reset"
-            class="link"
-            onclick="${e => this.openHandler(e, "reset")}"
-            >Change Email</a
-          >
-        </div>`}
+      <form class="reset__form" onsubmit="${e => this.fetchHandler(e)}">
+        ${this.messageNode}
+        <div class="fieldset">
+          ${
+            !this.showkey
+              ? html`
+                  <div class="info">
+                    Forgot your password?<br />
+                    Enter your email here
+                  </div>
+                `
+              : html`
+                  <div class="info">
+                    Enter the email key and your new password:
+                  </div>
+                `
+          }
         </div>
-      </div>
-      ${this.statusbar}
-    </form>
-  `;
+        <div class="fieldset">
+          ${
+            !this.showkey
+              ? this.emailInput
+              : html`
+                  <data-fragment>
+                    ${this.keyInput} ${this.passwordInput}
+                  </data-fragment>
+                `
+          } <slot name="submit" onclick="${e => this.fetchHandler(e)}"></slot>
+          <div class="footnote">
+            ${
+              !this.showkey
+                ? html`
+                    <div>
+                      <a
+                        href="#login"
+                        class="link"
+                        onclick="${e => this.openHandler(e, "login")}"
+                        >Login</a
+                      >
+                      |
+                      <a
+                        href="#register"
+                        class="link"
+                        onclick="${e => this.openHandler(e, "register")}"
+                        >Register</a
+                      >
+                    </div>
+                  `
+                : html`
+                    <div>
+                      <span>${this.email || ""}</span> |
+                      <a
+                        href="#reset"
+                        class="link"
+                        onclick="${e => this.openHandler(e, "reset")}"
+                        >Change Email</a
+                      >
+                    </div>
+                  `
+            }
+          </div>
+        </div>
+        ${this.statusbar}
+      </form>
+    `;
   }
 
   // Attribute Handling
   ////////////////////////////////////////////////////////////
 
   static get observedAttributes() {
-    return [
-      "postbody",
-      "posturl",
-      "mailurl",
-      "email",
-      "showkey"
-    ];
+    return ["postbody", "posturl", "mailurl", "email", "showkey"];
   }
-
 
   connectedCallback() {
     super.connectedCallback();
@@ -267,8 +274,7 @@ class tjbAuthReset extends WebComponent() {
   }
 
   _location(href, target) {
-    if (target === "reset")
-      return this.showkey = false;
+    if (target === "reset") return (this.showkey = false);
     this.dispatchEvent("redirect", {
       href,
       target
@@ -312,14 +318,10 @@ class tjbAuthReset extends WebComponent() {
 
   _success(resp) {
     console.log("success", resp);
-    bounce(
-      this.domNode,
-      () => {
-        if (!this.showkey)
-          return this.showkey = true;
-        return this.dispatchEvent("success", resp)
-      }
-    );
+    bounce(this.domNode, () => {
+      if (!this.showkey) return (this.showkey = true);
+      return this.dispatchEvent("success", resp);
+    });
   }
 
   _error(resp) {
@@ -339,44 +341,47 @@ class tjbAuthReset extends WebComponent() {
   writeMessageError() {
     this.domNode.removeEventListener("animationend", this.writeMessageError);
 
-    this.messageNode.error = !this.showkey ? html `
-      <ul>
-        <li>
-          <a
-            onclick="${() => this.emailInput.inputNode.focus()}"
-            href="#"
-            class="message__link"
-            >Wrong email</a
-          >
-        </li>
-        <li>
-          Don’t have an account yet?
-          <a
-            onclick="${e => this.openHandler(e, "login")}"
-            href="#login"
-            class="message__link"
-            >Login here</a
-          >
-        </li>
-      </ul>
-    ` : html `
-      <ul>
-        <li>
-          <a
-            onclick="${() => this.keyInput.inputNode.focus()}"
-            href="#"
-            class="message__link"
-            >Wrong Key</a
-          > or 
-          <a
-            onclick="${() => this.passwordInput.inputNode.focus()}"
-            href="#"
-            class="message__link"
-            >Invalid Password</a
-          >
-        </li>
-      </ul>
-    `;
+    this.messageNode.error = !this.showkey ?
+      html `
+          <ul>
+            <li>
+              <a
+                onclick="${() => this.emailInput.inputNode.focus()}"
+                href="#"
+                class="message__link"
+                >Wrong email</a
+              >
+            </li>
+            <li>
+              Don’t have an account yet?
+              <a
+                onclick="${e => this.openHandler(e, "login")}"
+                href="#login"
+                class="message__link"
+                >Login here</a
+              >
+            </li>
+          </ul>
+        ` :
+      html `
+          <ul>
+            <li>
+              <a
+                onclick="${() => this.keyInput.inputNode.focus()}"
+                href="#"
+                class="message__link"
+                >Wrong Key</a
+              >
+              or
+              <a
+                onclick="${() => this.passwordInput.inputNode.focus()}"
+                href="#"
+                class="message__link"
+                >Invalid Password</a
+              >
+            </li>
+          </ul>
+        `;
 
     if (this.emailInput) this.emailInput.showMessage("error");
     if (this.keyInput) this.keyInput.showMessage("error");

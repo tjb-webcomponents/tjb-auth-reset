@@ -94,12 +94,7 @@ Default public values:
 
 ```css
 :host {
-  --background-message-error: #fa354c;
-  --background-message-success: limegreen;
-
-  --color-message-success: white;
-  --color-message-error: white;
-  --color-info: grey;
+  --reset-color-info: grey;
 
   /* input */
   --reset-input-color-error: #fa354c;

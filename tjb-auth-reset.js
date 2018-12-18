@@ -77,48 +77,6 @@ class tjbAuthReset extends WebComponent() {
           animation: shake 150ms linear 3;
         }
 
-        .message {
-          box-sizing: border-box;
-          display: flex;
-          justify-content: center;
-          letter-spacing: 0.1px;
-          line-height: 1.5;
-          margin: -55px 0 20px -40px;
-          max-height: 0;
-          overflow: visible;
-          padding: 15px;
-          transition: max-height 250ms linear;
-          width: calc(100% + 80px);
-        }
-
-        .message--error {
-          max-height: 300px;
-          background: var(--background-message-error);
-          color: var(--color-message-error);
-          animation: blink 250ms linear 2;
-        }
-
-        .message--success {
-          max-height: 300px;
-          background: var(--background-message-success);
-          color: var(--color-message-success);
-          animation: blink 250ms linear 2;
-        }
-
-        .message__link {
-          text-decoration: underline;
-          cursor: pointer;
-        }
-
-        .message--error .message__link {
-          color: var(--color-message-error);
-        }
-
-        .message > ul {
-          padding: 0;
-          margin: 0;
-        }
-
         .fieldset {
           margin-bottom: 30px;
         }

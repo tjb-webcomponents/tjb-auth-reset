@@ -270,7 +270,8 @@ class tjbAuthReset extends WebComponent() {
 
   openHandler(event, target) {
     event.preventDefault();
-    bounce(event.target, this._location.bind(this, event.target.href, target));
+    bounce(event.target)
+      .then(this._location.bind(this, event.target.href, target));
   }
 
   _location(href, target) {
@@ -318,10 +319,11 @@ class tjbAuthReset extends WebComponent() {
 
   _success(resp) {
     console.log("success", resp);
-    bounce(this.domNode, () => {
-      if (!this.showkey) return (this.showkey = true);
-      return this.dispatchEvent("success", resp);
-    });
+    bounce(this.domNode)
+      .then(e => {
+        if (!this.showkey) return (this.showkey = true);
+        return this.dispatchEvent("success", resp);
+      });
   }
 
   _error(resp) {

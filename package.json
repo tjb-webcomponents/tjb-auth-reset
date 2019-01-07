@@ -12,7 +12,8 @@
     "build-max": "babel tjb-auth-reset.js --out-file docs/tjb-auth-reset.js",
     "build-min": "babel --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js",
     "watch-max": "babel --watch tjb-auth-reset.js --out-file docs/tjb-auth-reset.js",
-    "watch-min": "babel --watch --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js"
+    "watch-min": "babel --watch --minified tjb-auth-reset.js --out-file docs/tjb-auth-reset.min.js",
+    "patch": "npm run build; git add .; git commit -m '$M'; git push; npm version patch; npm publish"
   },
   "repository": {
     "type": "git",

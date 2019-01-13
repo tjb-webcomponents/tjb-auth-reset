@@ -80,11 +80,13 @@ All attributes:
 
 ### Events
 
-| name     | details                                  | description                                                                                  |
-| -------- | ---------------------------------------- | -------------------------------------------------------------------------------------------- |
-| redirect | - href (@String) <br> - target (@string) | triggered when user clicks on links. For instance `register` link or `forgor` password link. |
-| success  | - resp (@Object)                         | when the reset call returned a success message                                               |
-| error    | - resp (@Object)                         | when the reset call returned an error message                                                |
+| name     | details                                  | description                                                                                        |
+| -------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| redirect | - href (@String) <br> - target (@string) | triggered when user clicks on links. For instance `register` link or `forgor` password link.       |
+| success  | - resp (@Object)                         | when the reset call returned a success message                                                     |
+| error    | - resp (@Object)                         | when the reset call returned an error message                                                      |
+| sendmail | - body (@Object)                         | triggered on sendmail request. Hold the body of the potential request (email)                      |
+| reset    | - body (@Object)                         | triggered on password reset request. Hold the body of the potential request (email, password, key) |
 
 You can listen to events like so: `tjbreset.addEventListener('reset/success', (e) => { /* do stuff */ })`.
 

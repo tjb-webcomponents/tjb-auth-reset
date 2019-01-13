@@ -279,6 +279,9 @@ class tjbAuthReset extends WebComponent() {
     body.key = this.keyInput && this.keyInput.value;
     body.password = this.passwordInput && this.passwordInput.value;
 
+    this.dispatchEvent(this.showkey ? "reset" : "sendmail", body);
+    if (!this.posturl && !this.mailurl) return false;
+
     return fetch(this.showkey ? this.posturl : this.mailurl, {
       method: "POST",
       redirect: "follow",

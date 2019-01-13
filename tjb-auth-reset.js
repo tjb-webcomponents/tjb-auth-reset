@@ -1,8 +1,6 @@
 import WebComponent from "https://tjb-webcomponents.github.io/tjb-webcomponent/tjb-wc.min.js";
 import html from "https://tjb-webcomponents.github.io/html-template-string/html-template-string.js";
-import {
-  bounce
-} from "https://tjb-webcomponents.github.io/tjb-gfx/tjb-gfx.min.js";
+import { bounce } from "https://tjb-webcomponents.github.io/tjb-gfx/tjb-gfx.min.js";
 import "https://tjb-webcomponents.github.io/tjb-input/tjb-input.min.js";
 import "https://tjb-webcomponents.github.io/tjb-statusbar/tjb-statusbar.min.js";
 import "https://tjb-webcomponents.github.io/tjb-notify/tjb-notify.min.js";
@@ -12,7 +10,7 @@ class tjbAuthReset extends WebComponent() {
   ////////////////////////////////////////////////////////////
 
   CSS() {
-    return html `
+    return html`
       <style>
         :host {
           --reset-color-info: grey;
@@ -118,12 +116,12 @@ class tjbAuthReset extends WebComponent() {
   ////////////////////////////////////////////////////////////
 
   HTML() {
-    this.statusbar = html `
+    this.statusbar = html`
       <tjb-statusbar></tjb-statusbar>
     `;
 
-    this.emailInput = !this.showkey ?
-      html `
+    this.emailInput = !this.showkey
+      ? html`
           <tjb-input
             label="Email"
             type="email"
@@ -131,11 +129,11 @@ class tjbAuthReset extends WebComponent() {
             required="true"
             errormessage="Please check your email address"
           ></tjb-input>
-        ` :
-      "";
+        `
+      : "";
 
-    this.keyInput = this.showkey ?
-      html `
+    this.keyInput = this.showkey
+      ? html`
           <tjb-input
             label="Key"
             type="text"
@@ -145,11 +143,11 @@ class tjbAuthReset extends WebComponent() {
             required="true"
             errormessage="Please check the key"
           ></tjb-input>
-        ` :
-      "";
+        `
+      : "";
 
-    this.passwordInput = this.showkey ?
-      html `
+    this.passwordInput = this.showkey
+      ? html`
           <tjb-input
             label="New Password"
             type="password"
@@ -159,14 +157,14 @@ class tjbAuthReset extends WebComponent() {
             required="true"
             errormessage="Please check your password"
           ></tjb-input>
-        ` :
-      "";
+        `
+      : "";
 
-    this.messageNode = html `
+    this.messageNode = html`
       <tjb-notify></tjb-notify>
     `;
 
-    return html `
+    return html`
       <form class="reset__form" onsubmit="${e => this.fetchHandler(e)}">
         ${this.messageNode}
         <div class="fieldset">
@@ -270,8 +268,9 @@ class tjbAuthReset extends WebComponent() {
 
   openHandler(event, target) {
     event.preventDefault();
-    bounce(event.target)
-      .then(this._location.bind(this, event.target.href, target));
+    bounce(event.target).then(
+      this._location.bind(this, event.target.href, target)
+    );
   }
 
   _location(href, target) {
@@ -300,15 +299,18 @@ class tjbAuthReset extends WebComponent() {
     body.key = this.keyInput && this.keyInput.value;
     body.password = this.passwordInput && this.passwordInput.value;
 
+    this.dispatchEvent(this.showkey ? "reset" : "sendmail", body);
+    if (!this.posturl && !this.mailurl) return false;
+
     return fetch(this.showkey ? this.posturl : this.mailurl, {
-        method: "POST",
-        redirect: "follow",
-        credentials: "include",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify(body)
-      })
+      method: "POST",
+      redirect: "follow",
+      credentials: "include",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(body)
+    })
       .then(resp => resp.json())
       .then(resp => {
         if (resp.error) throw resp;
@@ -319,11 +321,10 @@ class tjbAuthReset extends WebComponent() {
 
   _success(resp) {
     console.log("success", resp);
-    bounce(this.domNode)
-      .then(e => {
-        if (!this.showkey) return (this.showkey = true);
-        return this.dispatchEvent("success", resp);
-      });
+    bounce(this.domNode).then(e => {
+      if (!this.showkey) return (this.showkey = true);
+      return this.dispatchEvent("success", resp);
+    });
   }
 
   _error(resp) {
@@ -343,8 +344,8 @@ class tjbAuthReset extends WebComponent() {
   writeMessageError() {
     this.domNode.removeEventListener("animationend", this.writeMessageError);
 
-    this.messageNode.error = !this.showkey ?
-      html `
+    this.messageNode.error = !this.showkey
+      ? html`
           <ul>
             <li>
               <a
@@ -364,8 +365,8 @@ class tjbAuthReset extends WebComponent() {
               >
             </li>
           </ul>
-        ` :
-      html `
+        `
+      : html`
           <ul>
             <li>
               <a

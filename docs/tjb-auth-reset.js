@@ -298,7 +298,7 @@ class tjbAuthReset extends WebComponent() {
 
   _success(resp) {
     console.log("success", resp);
-    bounce(this.domNode).then(e => {
+    this.success().then(e => {
       if (!this.showkey) return this.showkey = true;
       return this.dispatchEvent("success", resp);
     });
@@ -307,7 +307,15 @@ class tjbAuthReset extends WebComponent() {
   _error(resp) {
     console.error("error", resp);
     this.dispatchEvent("error", resp);
-    this.errorHandler();
+    this.error();
+  }
+
+  success() {
+    return bounce(this.domNode);
+  }
+
+  error() {
+    return this.errorHandler();
   }
 
   errorHandler() {
